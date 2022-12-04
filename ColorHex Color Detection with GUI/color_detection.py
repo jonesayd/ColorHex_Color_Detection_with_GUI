@@ -4,13 +4,13 @@ from PIL import Image, ImageTk
 from colorthief import ColorThief
 import os
 
-#Programa que mostra os valores em hexadecimal das cores predominantes em uma imagem.
+#Programa que mostra os valores em hexadecimal das cores predominantes em uma imagem selecionada.
 
-root= Tk()
-root.title("ColorHex")
-root.geometry("900x570+180+50") #janelaprincipal.geometry(widht-sendolarguradoprogramaxheight-sendoaltura+x+y-localfixoondeoprogramaserámostradonatela)
-root.configure(bg="#e4e8eb")
-root.resizable(False, False)
+janela_principal= Tk() #Criando uma instância de frame ou janela tkinter
+janela_principal.title("ColorHex") # Nome do programa na barra superior
+janela_principal.geometry("1200x630+30+10") # Tamanho da janela
+janela_principal.configure(bg="#e4e8eb")
+janela_principal.resizable(False, False) # False a janela não ser redimensionada
 
 def showimage ():
     global filename #filename sendo global, poderá ser usado em qualquer função (def)
@@ -20,8 +20,10 @@ def showimage ():
         ("Arquivo PNG", "*.png")
     ))
     img=Image.open(filename)
+    tamanho_imagem=(725,440)
+    img=img.resize(tamanho_imagem)
     img=ImageTk.PhotoImage(img)
-    lbl.configure(image=img, width=425, height=370) #Tamanho da janela que irá abrir a imagem que é a última "Label" antes dos botões
+    lbl.configure(image=img, width=725, height=440) #Tamanho da janela que irá abrir a imagem que é a última "Label" antes dos botões
     lbl.image=img
 
 def FindColor ():
@@ -64,14 +66,14 @@ def FindColor ():
 
 #Ícone
 image_icon=PhotoImage(file="icon_cd.png")
-root.iconphoto(False, image_icon)
+janela_principal.iconphoto(False, image_icon)
 
-#Faixa azul topo
-Label(root, width=220, height=10, bg="#363636").pack()
-Label(root, text="ColorHex - Detector de Cores", font="arial 25 bold", foreground="white", bg="#363636").place(x=50, y=5)
+#Faixa topo (cor grafite)
+Label(janela_principal, width=220, height=10, bg="#363636").pack()
+Label(janela_principal, text="ColorHex - Detector de Cores", font="arial 25 bold", foreground="white", bg="#363636").place(x=50, y=5)
 
-#Frame de dentro
-frame=Frame(root, width=800, height=470, bg="#fff")
+#Frame de dentro (cor branco)
+frame=Frame(janela_principal, width=1100, height=530, bg="#fff")
 frame.place(x=50, y=50)
 
 logo=PhotoImage(file="logo_cd.png")
@@ -127,25 +129,29 @@ hex9.place(x=60, y=165)
 hex10=Label(colors2, text="#14aaf5", fg="#000", font="arial 12 bold", bg="white")
 hex10.place(x=60, y=215)
 
+#Janela instruções
+jan_inst=Label(frame, text="Instruções:\n\n1. Clicar em 'Abrir Imagem'\n2. Selecionar a imagem desejada\n3. Clicar em 'Valor das Cores\n4. O programa irá mostrar:\n    - As 10 cores predominantes na imagem\n    - Seus valores em hexadecimal.", fg="#000", font="arial 10 bold", justify=LEFT, bg="white",width=35, height=8, bd=0).place(x=19, y=384)
+
 #Selecionando a imagem:
 
 #Quadro cinza criado para emoldurar o quadro da imagem
-selectimage=Frame(frame, width=445, height=450, bg="#d6dee5")
+selectimage=Frame(frame, width=745, height=510, bg="#d6dee5")
 selectimage.place(x=345, y=10)
 
 #Quadro preto dentro da moldura
-f=Frame(selectimage, bd=3, bg="black", width=425, height=370, relief=GROOVE)
+f=Frame(selectimage, bd=3, bg="black", width=725, height=440, relief=GROOVE)
 f.place(x=10, y=10)
 
 #Etiqueta onde aparecerá a imagem escolhida que será 'puxada' na função 'showimage'
 lbl=Label(f, bg="black")
 lbl.place(x=0, y=0)
 
-#Botões
+#Botões:
+
 #Classe(Local_btn_ficará, texto_btn, larg_btn, alt_btn, _fontetipo_tamanho_negrito, funçao_btn, lugar_btn)
 #Botão para escolher a foto
-Button(selectimage, text="Abrir Imagem", width=16, height=1, font="arial 14 bold", command=showimage).place(x=10, y=395)
+Button(selectimage, text="Abrir Imagem", width=16, height=1, font="arial 14 bold", command=showimage).place(x=100, y=460)
 #Botão para gerar o valor das cores
-Button(selectimage, text="Valor das Cores", width=16, height=1, font="arial 14 bold", command=FindColor).place(x=232, y=395)
+Button(selectimage, text="Valor das Cores", width=16, height=1, font="arial 14 bold", command=FindColor).place(x=432, y=460)
 
-root.mainloop()
+janela_principal.mainloop()
