@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 from colorthief import ColorThief
 import os
 
-#Programa que mostra os valores em hexadecimal das cores predominantes em uma imagem selecionada.
+#Programa que mostra os valores em hexadecimal das 10 cores mais predominantes em uma imagem selecionada.
 
 janela_principal= Tk() #Criando uma instância de frame ou janela tkinter
 janela_principal.title("ColorHex") # Nome do programa na barra superior
